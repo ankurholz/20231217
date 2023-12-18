@@ -86,7 +86,7 @@ read_counts <- function(filename){
 
 Mut_plasmid <- read_counts("C:/Users/dogcatfrogspider/Desktop/Desktop/py/20231122_AH/Mplasmid_codoncounts.csv")
 WT_plasmid <- read_counts("C:/Users/dogcatfrogspider/Desktop/Desktop/py/20231122_AH/WTplasmid_codoncounts.csv")
-passaged <- read_counts("C:/Users/dogcatfrogspider/Desktop/Desktop/py/20231122_AH/P1A_codoncounts.csv")
+passaged <- read_counts("C:/Users/dogcatfrogspider/Desktop/Desktop/py/20231122_AH/P1C_codoncounts.csv")
 
 ############################## Step 3-4 ###############################
 
@@ -163,9 +163,10 @@ fitness_plotting <- fitness %>%
   mutate(site = as.numeric(str_extract(mutation, "[0-9]+")))
 
 ggplot(fitness_plotting, aes(x = site, y = fitness, color = mutation_type)) +
-  geom_point(alpha = 0.7) +
-  facet_wrap(~mutation_type, scales = "free_y",
-             ncol = 1)
+  geom_point(alpha = 0.7)+
+  facet_wrap(~mutation_type,
+             ncol = 1) +
+  labs(title = "P1C Mutation class fitness by site")
 
 ####################### Normalize by subamplicon #####################
 
@@ -196,14 +197,14 @@ subamplicon_fitness <- enrichment %>%
   mutate(normalized_fitness = ifelse(mutation_type == "wildtype", log10(enrichment),
                                      log10(enrichment) - mean_silent_fitness))
 
-palette <- c("#5C4B51", "#1A3A48", "#8CBEB2", "#048789", "#F2EBBF", 
+palette <- c("#5C4B51", "#1A3A48", "#8CBEB2", "#048789", "#F2EBBF", #using Yuan's paper's palette
              "#F3B562", "#F06060", "#96505B", "#7E8AA2")
 
 ggplot(subamplicon_fitness, aes(x = normalized_fitness, y = after_stat(scaled),
                                 group = mutation_type,
                                 color = mutation_type,
                                 fill = mutation_type)) +
-  geom_density(alpha = 0.5, linewidth = 1) +
+  geom_density(alpha = 0.5, linewidth = 1.2) +
   facet_wrap(~mutation_type,
              ncol = 1) +
   scale_color_manual(name = "Mutation Types",
@@ -214,7 +215,7 @@ ggplot(subamplicon_fitness, aes(x = normalized_fitness, y = after_stat(scaled),
                     values=c(palette[8], palette[6], palette[4], palette[9]),
                     breaks=c("missense", "nonsense", "silent", "wildtype"),
                     labels=c("Missense", "Nonsense", "Silent", "Wildtype")) +
-  labs(x = "", y = "") +
+  labs(x = "Fitness", y = "Scaled density", title = "P1C Mutation class density and fitness ") +
   scale_x_continuous(limits = c(-4, 2), breaks = -4:2) +
   scale_y_continuous(limits = c(0, 1), breaks = seq(0, 1, 0.5)) +
   theme(plot.title = element_text(hjust = 0.5))
@@ -242,7 +243,8 @@ normalization_comparison <- fitness %>%
   left_join(subamplicon_fitness, by = c("mutation", "mutation_type"))
 
 ggplot(normalization_comparison, aes(x = fitness, y = normalized_fitness)) +
-  geom_point(alpha = 0.2)
+  geom_point(alpha = 0.2) +
+  labs(x = "nonnormalized fitness", y ="fitness", title = "P1C Fitness comparison to nonnormalized")
 
 ####Hotspot investigation####
 
@@ -252,15 +254,19 @@ hotspot <- combined %>%
   group_by(site) %>%
   summarize(total_mutfreq = sum(freq.passaged))
 
-fitness_686zoom <- fitness_plotting %>%
-  filter(site %in% c(675:695))
+fitness_200zoom <- fitness_plotting %>%
+  filter(site %in% c(190:210))
 
-ggplot(fitness_686zoom, aes(x = site, y = fitness, color = mutation_type)) +
+ggplot(fitness_200zoom, aes(x = site, y = fitness, color = mutation_type)) +
   geom_point(alpha = 0.3) +
   facet_wrap(~mutation_type,
              ncol = 1)
 
-passaged_ntchecks <- read_csv("/Users/aholz/Documents/20231122_AH/Rscripts/P1A_codoncounts.csv") %>%
-  filter(site == 206)
+passaged_ntchecks <- read_csv("C:/Users/dogcatfrogspider/Desktop/Desktop/py/20231122_AH/P1C_codoncounts.csv") %>%
+  filter(site == 206) %>%
+  pivot_longer(cols = -c("site","wildtype"),
+               names_to = "codon", values_to = "count")%>%
+  arrange(desc(count))
+  
 
   
