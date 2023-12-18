@@ -149,12 +149,20 @@ combined %>%
   select(site, subamplicon, mutation_type, count.input, mut_aa) %>%
   filter(mutation_type != "wildtype" &
            mutation_type != "silent") %>%
-  #mutate(aa_hm_fill = ifelse(mutation_type == "wildtype", )) #trying to figure out what to do with the wildtype
   filter(subamplicon == 1) %>%
   ggplot(aes(x = site, y = mut_aa, fill = count.input)) +
-  geom_tile() +
-  scale_fill_viridis() +  #(low = "pink", high = "lightgreen")
-  labs(title = "Amino acids present in mutant plasmid library by codon", y = "Amino acid", x = "Site") +
+  geom_tile(color = "white", linewidth = 0.25) +
+  scale_fill_viridis() +
+  theme_grey(base_size=9)+
+  scale_y_discrete(expand = c(0, 0)) +
+  scale_x_continuous(expand = c(0,0), breaks=seq(0,92,5)) +
+  theme(
+    plot.background = element_blank(),
+    axis.ticks.y = element_blank(),
+    panel.grid.major.y = element_blank(),
+    panel.grid.major.x = element_blank()
+  ) +
+  labs(title = "Subamplicon 1 Mutant Plasmid Library Amino Acid Counts", y = "Amino acid", x = "Site") +
   geom_point(data = hm_wildtype, aes(x = site, y = mut_aa), inherit.aes = FALSE, color = "red")
   
 
