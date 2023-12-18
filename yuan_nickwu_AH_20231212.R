@@ -135,6 +135,8 @@ combined <- input_subamplicons %>%
   filter(freq.input >= 6*freq.wt |
            mutation_type == "wildtype")
 
+#### mutant plasmid heatmap ####
+
 hm_wildtype <- combined %>%
   mutate(mut_aa = str_sub(mutation,start = -3)) %>%
   select(site, subamplicon, mutation_type, count.input, mut_aa) %>%
