@@ -14,7 +14,10 @@
 
 #Step6: subtract mean enrichment of silent mutations
 
+library(stringr)
 library(tidyverse)
+install.packages("viridis")
+library(viridis)
 
 ############################## Step 1-2 ###############################
 codons <- tibble(
@@ -132,6 +135,26 @@ combined <- input_subamplicons %>%
   filter(freq.input >= 6*freq.wt |
            mutation_type == "wildtype")
 
+hm_wildtype <- combined %>%
+  mutate(mut_aa = str_sub(mutation,start = -3)) %>%
+  select(site, subamplicon, mutation_type, count.input, mut_aa) %>%
+  filter(mutation_type == "wildtype") %>%
+  filter(subamplicon == 1)
+
+
+combined %>%
+  mutate(mut_aa = str_sub(mutation,start = -3)) %>%
+  select(site, subamplicon, mutation_type, count.input, mut_aa) %>%
+  filter(mutation_type != "wildtype" &
+           mutation_type != "silent") %>%
+  #mutate(aa_hm_fill = ifelse(mutation_type == "wildtype", )) #trying to figure out what to do with the wildtype
+  filter(subamplicon == 1) %>%
+  ggplot(aes(x = site, y = mut_aa, fill = count.input)) +
+  geom_tile() +
+  scale_fill_viridis() +  #(low = "pink", high = "lightgreen")
+  labs(title = "Amino acids present in mutant plasmid library by codon", y = "Amino acid", x = "Site") +
+  geom_point(data = hm_wildtype, aes(x = site, y = mut_aa), inherit.aes = FALSE, color = "red")
+  
 
 ############################## Step 5 ###############################
 
