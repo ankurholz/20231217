@@ -263,7 +263,7 @@ ggplot(fitness_200zoom, aes(x = site, y = fitness, color = mutation_type)) +
              ncol = 1)
 
 passaged_ntchecks <- read_csv("C:/Users/dogcatfrogspider/Desktop/Desktop/py/20231122_AH/P1C_codoncounts.csv") %>%
-  filter(site == 206) %>%
+  filter(site == 686) %>%
   pivot_longer(cols = -c("site","wildtype"),
                names_to = "codon", values_to = "count")%>%
   arrange(desc(count))
