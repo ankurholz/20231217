@@ -84,9 +84,9 @@ read_counts <- function(filename){
   return(counts)
 }
 
-Mut_plasmid <- read_counts("/Users/aholz/Documents/20231122_AH/Rscripts/Mplasmid_codoncounts.csv")
-WT_plasmid <- read_counts("/Users/aholz/Documents/20231122_AH/Rscripts/WTplasmid_codoncounts.csv")
-passaged <- read_counts("/Users/aholz/Documents/20231122_AH/Rscripts/P1A_codoncounts.csv")
+Mut_plasmid <- read_counts("C:/Users/dogcatfrogspider/Desktop/Desktop/py/20231122_AH/Mplasmid_codoncounts.csv")
+WT_plasmid <- read_counts("C:/Users/dogcatfrogspider/Desktop/Desktop/py/20231122_AH/WTplasmid_codoncounts.csv")
+passaged <- read_counts("C:/Users/dogcatfrogspider/Desktop/Desktop/py/20231122_AH/P1A_codoncounts.csv")
 
 ############################## Step 3-4 ###############################
 
