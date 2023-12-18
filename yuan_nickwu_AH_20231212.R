@@ -84,10 +84,17 @@ read_counts <- function(filename){
   return(counts)
 }
 
-Mut_plasmid <- read_counts("C:/Users/dogcatfrogspider/Desktop/Desktop/py/20231122_AH/Mplasmid_codoncounts.csv")
-WT_plasmid <- read_counts("C:/Users/dogcatfrogspider/Desktop/Desktop/py/20231122_AH/WTplasmid_codoncounts.csv")
-passaged <- read_counts("C:/Users/dogcatfrogspider/Desktop/Desktop/py/20231122_AH/P1C_codoncounts.csv")
+##For personal computer
 
+#Mut_plasmid <- read_counts("C:/Users/dogcatfrogspider/Desktop/Desktop/py/20231122_AH/Mplasmid_codoncounts.csv")
+#WT_plasmid <- read_counts("C:/Users/dogcatfrogspider/Desktop/Desktop/py/20231122_AH/WTplasmid_codoncounts.csv")
+#passaged <- read_counts("C:/Users/dogcatfrogspider/Desktop/Desktop/py/20231122_AH/P1C_codoncounts.csv")
+
+##For core imaged computer
+
+Mut_plasmid <- read_counts("/Users/aholz/Documents/20231122_AH/Rscripts/Mplasmid_codoncounts.csv")
+WT_plasmid <- read_counts("/Users/aholz/Documents/20231122_AH/Rscripts/WTplasmid_codoncounts.csv")
+passaged <- read_counts("/Users/aholz/Documents/20231122_AH/Rscripts/P1A_codoncounts.csv")
 ############################## Step 3-4 ###############################
 
 #filter for counts >10 in plasmid libary
@@ -166,7 +173,7 @@ ggplot(fitness_plotting, aes(x = site, y = fitness, color = mutation_type)) +
   geom_point(alpha = 0.7)+
   facet_wrap(~mutation_type,
              ncol = 1) +
-  labs(title = "P1C Mutation class fitness by site")
+  labs(title = "P1A Mutation class fitness by site")
 
 ####################### Normalize by subamplicon #####################
 
