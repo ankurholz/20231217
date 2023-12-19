@@ -98,6 +98,9 @@ read_counts <- function(filename){
 Mut_plasmid <- read_counts("/Users/aholz/Documents/20231122_AH/Rscripts/Mplasmid_codoncounts.csv")
 WT_plasmid <- read_counts("/Users/aholz/Documents/20231122_AH/Rscripts/WTplasmid_codoncounts.csv")
 passaged <- read_counts("/Users/aholz/Documents/20231122_AH/Rscripts/P1A_codoncounts.csv")
+passaged_b <- read_counts("/Users/aholz/Documents/20231122_AH/Rscripts/P1B_codoncounts.csv")
+passaged_c <- read_counts("/Users/aholz/Documents/20231122_AH/Rscripts/P1C_codoncounts.csv")
+
 ############################## Step 3-4 ###############################
 
 #filter for counts >10 in plasmid libary
@@ -151,7 +154,7 @@ combined %>%
            mutation_type != "silent") %>%
   filter(subamplicon == 8) %>%
   ggplot(aes(x = site, y = mut_aa, fill = count.input)) +
-  geom_tile(color = "white", linewidth = 0.25) +
+  geom_tile() +
   scale_fill_viridis() +
   theme_grey(base_size=9)+
   scale_y_discrete(expand = c(0, 0)) +
@@ -161,9 +164,10 @@ combined %>%
     panel.background = element_rect(fill="grey"),
     axis.ticks.y = element_blank(),
     panel.grid.major.y = element_blank(),
-    panel.grid.major.x = element_blank()
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.x = element_blank()
   ) +
-  labs(title = "Subamplicon 8 Mutant Plasmid Library Amino Acid Counts", y = "Amino acid", x = "Site", fill = "Count") +
+  labs(title = "Subamplicon 8 Mutant Plasmid Library Amino Acid Counts", y = "Amino Acid", x = "Site", fill = "Count") +
   geom_point(data = hm_wildtype, aes(x = site, y = mut_aa), inherit.aes = FALSE, color = "red")
   
 
