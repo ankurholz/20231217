@@ -141,7 +141,7 @@ hm_wildtype <- combined %>%
   mutate(mut_aa = str_sub(mutation,start = -3)) %>%
   select(site, subamplicon, mutation_type, count.input, mut_aa) %>%
   filter(mutation_type == "wildtype") %>%
-  filter(subamplicon == 1)
+  filter(subamplicon == 8)
 
 
 combined %>%
@@ -149,20 +149,21 @@ combined %>%
   select(site, subamplicon, mutation_type, count.input, mut_aa) %>%
   filter(mutation_type != "wildtype" &
            mutation_type != "silent") %>%
-  filter(subamplicon == 1) %>%
+  filter(subamplicon == 8) %>%
   ggplot(aes(x = site, y = mut_aa, fill = count.input)) +
   geom_tile(color = "white", linewidth = 0.25) +
   scale_fill_viridis() +
   theme_grey(base_size=9)+
   scale_y_discrete(expand = c(0, 0)) +
-  scale_x_continuous(expand = c(0,0), breaks=seq(0,92,5)) +
+  scale_x_continuous(expand = c(0,0), breaks=seq(676,758,5)) +
   theme(
-    plot.background = element_blank(),
+    plot.background = element_rect(fill="white"),
+    panel.background = element_rect(fill="grey"),
     axis.ticks.y = element_blank(),
     panel.grid.major.y = element_blank(),
     panel.grid.major.x = element_blank()
   ) +
-  labs(title = "Subamplicon 1 Mutant Plasmid Library Amino Acid Counts", y = "Amino acid", x = "Site") +
+  labs(title = "Subamplicon 8 Mutant Plasmid Library Amino Acid Counts", y = "Amino acid", x = "Site", fill = "Count") +
   geom_point(data = hm_wildtype, aes(x = site, y = mut_aa), inherit.aes = FALSE, color = "red")
   
 
