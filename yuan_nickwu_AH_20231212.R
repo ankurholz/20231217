@@ -158,7 +158,7 @@ combined %>%
   scale_fill_viridis() +
   theme_grey(base_size=9)+
   scale_y_discrete(expand = c(0, 0)) +
-  scale_x_continuous(expand = c(0,0), breaks=seq(676,758,5)) +
+  scale_x_continuous(expand = c(0,0), breaks=seq(676, 758, 5)) +
   theme(
     plot.background = element_rect(fill="white"),
     panel.background = element_rect(fill="grey"),
